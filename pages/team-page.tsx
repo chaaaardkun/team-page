@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import FadeIn from 'components/FadeAnimation'
+import FadeIn from 'components/ui/FadeAnimation'
+import Header from 'components/templates/Header';
 
 const team = [
   {
@@ -117,6 +118,7 @@ const TeamPage: NextPage = () => {
 
   return (
     <div className="h-full">
+      <Header />
       <h2 className="mt-8 mb-6">Meet the Team</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap:1 md:gap-6 mx-auto">
         { team.map((member) => (

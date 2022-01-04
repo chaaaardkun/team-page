@@ -1,0 +1,49 @@
+.input {
+  @apply border rounded text-base text-tertiary border-gray1 hover:border-primary focus:border-primary focus:border-2 focus:outline-none h-12 w-full px-4;
+
+  &__ifta {
+    @apply pt-3;
+
+    &::placeholder {
+      color: transparent;
+    }
+
+    &::-ms-reveal,
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  &__ifta-label {
+    @apply absolute left-4 top-1 text-xs text-gray1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-placeholder-shown:top-3 peer-focus:top-1 peer-focus:text-gray-300 peer-focus:text-xs pointer-events-none;
+  }
+
+  &__text-label,
+  &__price-label {
+    @apply absolute left-0 -top-6 text-tertiary font-semibold text-sm pointer-events-none;
+    font-size: 0.875rem;
+  }
+
+  &__price {
+    @apply pl-8;
+  }
+
+  &__price-wrapper {
+    @apply flex items-center relative;
+  }
+
+  &__price-currency {
+    @apply absolute left-0 px-4 text-gray-300 font-body;
+  }
+
+  &__error-message {
+    @apply text-error text-xs mt-1;
+    line-height: 1.125rem;
+  }
+
+  &__ifta--error,
+  &__price--error,
+  &__text--error {
+    @apply border-error hover:border-error focus:border-error;
+  }
+}

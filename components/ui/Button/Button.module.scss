@@ -1,0 +1,160 @@
+/**
+ * Button Base
+ */
+.btn {
+  --text: theme('colors.white');
+  --text-disabled: theme('colors.white');
+  --text-hover: theme('colors.white');
+  --surface: theme('colors.primary');
+  --surface-disabled: theme('colors.disabled');
+  --surface-hover: theme('colors.tertiary');
+
+  @apply inline-grid grid-flow-col gap-3 items-center text-sm font-semibold px-4 py-3 border border-opacity-0 rounded leading-5 relative outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  background-color: var(--surface);
+  color: var(--text);
+
+  &:hover {
+    background-color: var(--surface-hover);
+    color: var(--text-hover);
+  }
+
+  &:global(.is-disabled),
+  &:disabled {
+    @apply cursor-auto;
+    background-color: var(--surface-disabled);
+    color: var(--text-disabled);
+  }
+
+  &:global(.is-loading) {
+    @apply cursor-auto pointer-events-none;
+  }
+}
+
+/**
+ * Sizes
+ */
+.btn:global(.btn-xs) {
+  @apply gap-2 text-xs px-3 py-1;
+}
+
+.btn:global(.btn-sm) {
+  @apply gap-2 py-1;
+}
+
+.btn:global(.btn-md) {
+  @apply py-[0.813rem]
+}
+
+.btn:global(.btn-lg) {
+  @apply text-base px-6 py-3.5 leading-6;
+}
+
+.btn:global(.btn-xl) {
+  @apply text-lg px-7 py-4 leading-6;
+}
+
+/**
+ * Icon
+ */
+.btn:global(.is-loading) {
+  .btn-icon {
+    @apply invisible;
+  }
+}
+
+.btn-icon {
+  @apply flex text-current;
+}
+
+.btn:global(.btn-icon-left) {
+  .btn-icon {
+    @apply order-first;
+  }
+}
+
+.btn:global(.btn-icon-right) {
+  .btn-icon {
+    @apply order-last;
+  }
+}
+
+/**
+ * Label
+ */
+.btn:global(.is-loading) {
+  .btn-label {
+    @apply invisible;
+  }
+}
+
+.btn-label {
+}
+
+/**
+ * Spinner
+ */
+.btn-spinner {
+  @apply text-lg absolute left-0 right-0 pointer-events-none;
+}
+
+/**
+ * Styles
+ */
+
+/* Outline */
+.btn:global([class*='btn-outline']) {
+  --surface: transparent;
+  --surface-disabled: transparent;
+  --surface-hover: transparent;
+
+  @apply border-current;
+}
+
+/* Link */
+.btn:global([class*='btn-text']) {
+  --surface: transparent;
+  --surface-disabled: transparent;
+  --surface-hover: transparent;
+
+  @apply p-0;
+}
+
+/* Plain */
+.btn:global([class*='btn-plain']) {
+  --text: theme('colors.secondary');
+  --text-disabled: theme('colors.gray.100');
+  --text-hover: theme('colors.gray.300');
+  --surface: transparent;
+  --surface-disabled: transparent;
+  --surface-hover: theme('colors.gray.500');
+}
+
+/**
+ * Themes
+ */
+.btn:global(.btn-primary) {
+  --text: theme('colors.white');
+  --text-disabled: theme('colors.white');
+  --text-hover: theme('colors.white');
+  --surface: theme('colors.primary');
+  --surface-disabled: theme('colors.disabled');
+  --surface-hover: theme('colors.tertiary');
+}
+
+.btn:global(.btn-outline-primary) {
+  --text: theme('colors.secondary');
+  --text-disabled: theme('colors.gray.100');
+  --text-hover: theme('colors.gray.300');
+}
+
+.btn:global(.btn-text-primary) {
+  --text: theme('colors.secondary');
+  --text-disabled: theme('colors.gray.200');
+  --text-hover: theme('colors.gray.300');
+}
+
+.btn:global(.btn-plain-primary) {
+  --text: theme('colors.gray.500');
+  --text-disabled: theme('colors.gray.100');
+  --text-hover: theme('colors.gray.500');
+}

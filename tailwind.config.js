@@ -10,7 +10,11 @@ module.exports = {
       colors: {
         primary: '#232323',
         secondary: '#4F4F4F',
+        tertiary: '#444444',
+        disabled: '#D3D3D3',
         placeholder: '#DDDDDD',
+        error: '#FF493C',
+        gray1: '#A7A7A7',
       },
       fontSize: {
         '4xl': '2.5rem',
