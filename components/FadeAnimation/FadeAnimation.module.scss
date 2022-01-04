@@ -1,0 +1,40 @@
+
+.fade-in {
+  @apply opacity-0 invisible;
+  transform: translateX(5rem);
+  transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+}
+
+.section-is-visible {
+  @apply opacity-100 transform-none visible;
+}
+
+.fade-on-load {
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation: fadeInAnimation 2s ease;
+}
+
+@-webkit-keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(5rem);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(5rem);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
