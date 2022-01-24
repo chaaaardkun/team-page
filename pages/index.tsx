@@ -5,12 +5,35 @@ import Input from 'components/ui/Input'
 import { useState } from 'react'
 import router from 'next/router'
 
+const { motion } = require("framer-motion");
+
 const hiddenPassword = "cWpG9T/{HWK]^@J~"
 
 const SignIn: NextPage = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.4,
+        staggerChildren: 0.2
+      }
+    }
+  };
+  
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
+
 
   const onSubmitClick = async () => {
     setIsLoading(true);
@@ -30,8 +53,13 @@ const SignIn: NextPage = () => {
   console.log(password);
 
   return (
-    <div className="flex m-auto mt-[12.5rem] flex-col h-full max-w-sm">
-      <div className="position-relative mb-4 text-center">
+    <motion.div
+      className="flex m-auto justify-center flex-col h-full max-w-sm"
+      variants={container}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div className="position-relative mb-4 text-center" variants={item}>
         <Image
           src="/images/icon-fingerprint.png"
           alt="fingerprint"
@@ -40,9 +68,11 @@ const SignIn: NextPage = () => {
           quality={100}
           placeholder="empty"
         />
-      </div>
-      <h4 className="text-center">Enter password to continue</h4>
-
+      </motion.div>
+      <motion.div variants={item}>
+        <h4 className="text-center">Enter password to continue</h4>
+      </motion.div>
+      <motion.div variants={item}>
         <Input
           placeholder="Current Password"
           type="password"
@@ -51,13 +81,16 @@ const SignIn: NextPage = () => {
           errorMessage={error}
           emitTextValue={setPassword}
         />
+      </motion.div>
+      <motion.div variants={item}>
       <Button 
         label="Submit" 
         className="w-full mt-4"           
         type="button" 
         loading={isLoading}
         onClick={onSubmitClick}/>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
 

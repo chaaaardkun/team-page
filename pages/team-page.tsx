@@ -2,127 +2,174 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import FadeIn from 'components/ui/FadeAnimation'
 import Header from 'components/templates/Header';
+const { motion } = require("framer-motion");
 
 const team = [
   {
     id: 1,
     name: 'Eve Sotto',
     image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    position: 'Marketing Director',
+    imagePosition: '38%',
   },
   {
     id: 2,
     name: 'Owtee Bingayan',
-    image: '/images/eve-sotto.png',
-    position: 'Head of Engineering'
+    image: '/images/owtee-bingayan.png',
+    position: 'Head of Engineering',
+    imagePosition: '19%',
   },
   {
     id: 3,
     name: 'James Dulay',
-    image: '/images/eve-sotto.png',
-    position: 'Head of User Experience'
+    image: '/images/james-dulay.png',
+    position: 'Head of User Experience',
+    imagePosition: '5%',
   },
   {
     id: 4,
     name: 'Erny Nazario',
-    image: '/images/eve-sotto.png',
-    position: 'Head of Product'
+    image: '/images/erny-nazario.png',
+    position: 'Head of Product',
+    imagePosition: '40%',
   },
   {
     id: 5,
     name: 'Susette Ignacio',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    image: '/images/susette-ignacio.png',
+    position: 'Product Designer'
   },
   {
     id: 6,
-    name: 'Klinton Ballecer',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Mikhael Oriel',
+    image: '/images/mikhael-oriel.png',
+    position: 'Software Engineer, SME'
   },
   {
     id: 7,
-    name: 'Mary Flor Velasquez',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Klinton Ballecer',
+    image: '/images/klinton-ballecer.png',
+    position: 'Team Lead'
   },
   {
     id: 8,
-    name: 'Richard Bandol',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Mary Flor Velasquez',
+    image: '/images/mary-flor-velasquez.png',
+    position: 'Quality Analyst'
   },
   {
     id: 9,
-    name: 'Ryan Torino',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Richard Bandol',
+    image: '/images/richard-bandol.png',
+    position: 'Software Engineer I'
   },
   {
     id: 10,
-    name: 'Joseph Balantakbo',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Ryan Torino',
+    image: '/images/ryan-torino.png',
+    position: 'Software Engineer I'
   },
   {
     id: 11,
-    name: 'Nathaniel Canilao',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Joseph Balantakbo',
+    image: '/images/joseph-balantakbo.png',
+    position: 'QA Automation Engineer'
   },
   {
     id: 12,
-    name: 'Arvin Tubianosa',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Nathaniel Canilao',
+    image: '/images/nathaniel-canilao.png',
+    position: 'Quality Analyst'
   },
   {
     id: 13,
-    name: 'Nica Dolleton',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Arvin Tubianosa',
+    image: '/images/arvin-tubianosa.png',
+    position: 'Quality Analyst'
   },
   {
     id: 14,
-    name: 'Janel Aubrey Vicente',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Nica Dolleton',
+    image: '/images/nica-dolleton.png',
+    position: 'Product Designer'
   },
   {
     id: 15,
-    name: 'Abi Joson',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Janel Aubrey Vicente',
+    image: '/images/janel-aubrey-vicente.png',
+    position: 'Product Designer'
   },
   {
     id: 16,
-    name: 'Aileen Romero',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    name: 'Abi Joson',
+    image: '/images/abi-joson.png',
+    position: 'Product Designer'
   },
   {
     id: 17,
+    name: 'Aileen Romero',
+    image: '/images/aileen-romero.png',
+    position: 'IOS Developer'
+  },
+  {
+    id: 18,
+    name: 'Justine Tabin',
+    image: '/images/justine-tabin.png',
+    position: 'Sr. IOS Developer'
+  },
+  {
+    id: 18,
+    name: 'Julius Francisco',
+    image: '/images/julius-francisco.png',
+    position: 'Software Engineer, SLA'
+  },
+  {
+    id: 19,
     name: 'Dale Mananghaya',
-    image: '/images/eve-sotto.png',
-    position: 'Marketing Director'
+    image: '/images/dale-mananghaya.png',
+    position: 'OJT'
   },
 ];
 
 const TeamPage: NextPage = () => {
-  const calculateDelay = (id: number) => {
-    if(id > 8) {
-      return (100 * id) / 3;
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.5,
+        staggerChildren: 0.2
+      }
     }
-    return 100 * id
-  }
+  };
+  
+  const item = {
+    hidden: { x: 20, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+    },
+  };
 
   return (
     <div className="h-full">
-      <Header />
-      <h2 className="mt-8 mb-6">Meet the Team</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap:1 md:gap-6 mx-auto">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
+        <Header />
+        <h2 className="mt-8 mb-6">Meet the Team</h2>
+      </motion.div>
+      <motion.ul
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap:1 md:gap-6 mx-auto"
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
         { team.map((member) => (
-          <FadeIn key={member.id} style={{ transitionDelay: `${calculateDelay(member.id)}ms` }}>
+           <motion.li key={member.id} variants={item}>
             <div className="card flex flex-col">
               <div className="position-relative bg-placeholder">
                 {member.image &&
@@ -135,16 +182,16 @@ const TeamPage: NextPage = () => {
                     objectFit="cover"
                     quality={100}
                     placeholder="empty"
+                    objectPosition={`100% ${member.imagePosition ? member.imagePosition : 0}`}
                   />
                 }
               </div>
               <h3 className="py-2">{member.name}</h3>
               <p>{member.position}</p>
             </div>
-          </FadeIn>
+          </motion.li>
         ))}
-        
-      </div>
+        </motion.ul>
     </div>
   )
 }
