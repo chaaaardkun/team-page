@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import FadeIn from 'components/ui/FadeAnimation'
 import Header from 'components/templates/Header';
+import { useState } from 'react';
 const { motion } = require("framer-motion");
 
 const team = [
@@ -48,7 +49,7 @@ const team = [
   {
     id: 7,
     name: 'Klinton Ballecer',
-    image: '/images/klinton-ballecer.png',
+    image: '/images/empty/klinton-ballecer.png',
     position: 'Team Lead'
   },
   {
@@ -109,7 +110,8 @@ const team = [
     id: 17,
     name: 'Aileen Romero',
     image: '/images/aileen-romero.png',
-    position: 'IOS Developer'
+    position: 'IOS Developer',
+    imagePosition: '40%',
   },
   {
     id: 18,
@@ -131,7 +133,33 @@ const team = [
   },
 ];
 
+
+const oldMembers = [
+  {
+    id: 1,
+    name: 'Sam Esquejo',
+    image: '/images/sam-esquejo.png',
+    position: 'Marketing Director',
+    imagePosition: '40%',
+  },
+  {
+    id: 2,
+    name: 'Benedict Mateo',
+    image: '/images/benedict-mateo.png',
+    position: 'Head of Engineering',
+  },
+  {
+    id: 3,
+    name: 'Lordwill Mabalot',
+    image: '/images/lordwill-mabalot.png',
+    position: 'Head of Engineering',
+  },
+];
+
+
 const TeamPage: NextPage = () => {
+  const [displayOldMembers, setDisplayOldMembers] = useState(false);
+
   const container = {
     hidden: { opacity: 1, scale: 0 },
     visible: {
@@ -180,7 +208,6 @@ const TeamPage: NextPage = () => {
                     width={302}
                     layout="responsive"
                     objectFit="cover"
-                    quality={100}
                     placeholder="empty"
                     objectPosition={`100% ${member.imagePosition ? member.imagePosition : 0}`}
                   />
@@ -192,6 +219,40 @@ const TeamPage: NextPage = () => {
           </motion.li>
         ))}
         </motion.ul>
+
+        <p className="mt-32 mb-16 text-center">&copy; 2021 <button type="button" onClick={() => setDisplayOldMembers(!displayOldMembers)}>All</button> rights reserved.</p>
+       <div className="mb-16">
+          <motion.ul
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap:1 md:gap-6 mx-auto"
+            variants={container}
+            initial="hidden"
+            animate="visible"
+          >          
+          { displayOldMembers && oldMembers.map((member) => (
+            <motion.li key={member.id} variants={item}>
+              <div className="card flex flex-col">
+                <div className="position-relative bg-placeholder">
+                  {member.image &&
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      height={280}
+                      width={302}
+                      layout="responsive"
+                      objectFit="cover"
+                      quality={100}
+                      placeholder="empty"
+                      objectPosition={`100% ${member.imagePosition ? member.imagePosition : 0}`}
+                    />
+                  }
+                </div>
+                <h3 className="py-2">{member.name}</h3>
+                <p>{member.position}</p>
+              </div>
+            </motion.li>
+          ))}         
+        </motion.ul> 
+      </div>
     </div>
   )
 }
