@@ -10,7 +10,7 @@ const Main = () => {
     <div className="mt-10">
       <Image
         src="/images/oqulo-logo.png"
-        alt="Susette Ignacio"
+        alt="oqulo"
         height={40}
         width={72}
         quality={100}
