@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import FadeIn from 'components/ui/FadeAnimation'
 import clsx from 'clsx';
 import Header from 'components/templates/Header';
 import { useState } from 'react';
@@ -162,24 +161,36 @@ const TeamPage: NextPage = () => {
   const [displayOldMembers, setDisplayOldMembers] = useState(false);
 
   const container = {
-    hidden: { opacity: 1, scale: 0 },
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
-      scale: 1,
       transition: {
         delayChildren: 0.5,
-        staggerChildren: 0.2
+        staggerChildren: 0.2,
       }
     }
   };
   
   const item = {
+    hidden: { x: 100, opacity: 0 },
+    visible: index => { 
+      console.log(index);
+      return {
+      opacity: 1,
+      x: 0,
+      transition: { delay: (index / 2) * 0.1, duration: 0.8  }
+    }
+  }
+  };
+
+  const itemCircle = {
     hidden: { x: 20, opacity: 0 },
     visible: {
       x: 0,
       opacity: 1,
-    },
+    }
   };
+  
 
   return (
     <div className="h-full">
@@ -195,11 +206,11 @@ const TeamPage: NextPage = () => {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap:1 md:gap-6 mx-auto"
         variants={container}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
       >
-        { team.map((member) => (
-           <motion.li key={member.id} variants={item}>
-            <div className="card flex flex-col">
+        { team.map((member, index) => (
+           <motion.li key={member.id} variants={item} custom={index} whileInView="visible" className="card flex flex-col" 
+           viewport={{ margin: '1px 0px 1px 0px' }}>
               <div className={clsx('position-relative bg-placeholder', {'h-[17.5rem]' : !member.image} )}>
                 {member.image &&
                   <Image
@@ -216,7 +227,6 @@ const TeamPage: NextPage = () => {
               </div>
               <h3 className="py-2">{member.name}</h3>
               <p>{member.position}</p>
-            </div>
           </motion.li>
         ))}
         </motion.ul>
@@ -228,10 +238,10 @@ const TeamPage: NextPage = () => {
             className="flex justify-end mb-6"
             variants={container}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
           >          
           { [...Array(10)]?.map((_, key) => (
-            <motion.li key={key} variants={item} className="mr-2">
+            <motion.li key={key} variants={itemCircle} className="mr-2" whileInView="visible">
             {
               key === 1 || key === 3 || key === 5 || key === 6 || key === 8 ? (
                 <svg height="96" width="96">
@@ -251,7 +261,7 @@ const TeamPage: NextPage = () => {
             className="absolute left-5 mt-14"  
             variants={container}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
           >   
             <Image
               src="/images/hand-graphic.png"
@@ -266,10 +276,10 @@ const TeamPage: NextPage = () => {
             className="flex justify-center ml-24 mb-6"
             variants={container}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
           >          
           { displayOldMembers && [...Array(7)]?.map((_, key) => (
-            <motion.li key={key} variants={item} className="mr-2">
+            <motion.li key={key} variants={itemCircle} className="mr-2" whileInView="visible">
             {
               key === 1 || key === 3 || key === 5 || key === 6 ? (
                 <svg height="96" width="96">
@@ -289,10 +299,10 @@ const TeamPage: NextPage = () => {
             className="flex justify-end mb-6"
             variants={container}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
           >          
           { displayOldMembers && [...Array(8)]?.map((_, key) => (
-            <motion.li key={key} variants={item} className="mr-2">
+            <motion.li key={key} variants={itemCircle} className="mr-2" whileInView="visible">
               {
                 key === 0 || key === 1 || key === 3 || key === 5 || key === 6 ? (
                   <svg height="96" width="96">
@@ -312,10 +322,10 @@ const TeamPage: NextPage = () => {
             className="flex justify-end mr-48 mb-6"
             variants={container}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
           >          
           { displayOldMembers && [...Array(8)]?.map((_, key) => (
-            <motion.li key={key} variants={item} className="mr-2">
+            <motion.li key={key} variants={itemCircle} className="mr-2" whileInView="visible">
               {
                 key === 0 || key === 3 || key === 5 ? (
                   <svg height="96" width="96">
