@@ -10,6 +10,8 @@ const { motion } = require("framer-motion");
 type GeneratedToken = { userId: string; source: string; iat: number; exp: number };
 const CLIENT_URL = process.env.APP_URL;
 
+const BASE_SIZE = 4;
+
 const team = [
   {
     id: 1,
@@ -169,34 +171,41 @@ const TeamPage: NextPage = () => {
     hidden: { opacity: 1 },
     visible: {
       opacity: 1,
-      transition: {
-        delayChildren: 0.5,
-        staggerChildren: 0.2,
-      }
     }
   };
   
   const item = {
     hidden: { x: 100, opacity: 0 },
-    visible: index => { 
-      console.log(index);
+    visible: (index: number) => { 
+      const delay = index % BASE_SIZE / 2;
       return {
       opacity: 1,
       x: 0,
-      transition: { delay: (index / 2) * 0.1, duration: 0.8  }
+      transition: { delay, duration: 0.8  }
     }
   }
   };
 
+  const containerCircle = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.5,
+        staggerChildren: 0.5,
+      }
+    }
+  };
+
   const itemCircle = {
-    hidden: { x: 20, opacity: 0 },
+    hidden: { x: 100, opacity: 0 },
     visible: {
       x: 0,
       opacity: 1,
+      transition: { duration: 0.8  }
     }
   };
   
-
   return (
     <div className="h-full">
       <motion.div
@@ -241,7 +250,7 @@ const TeamPage: NextPage = () => {
         <div className="pb-24 mx-16 relative">
           <motion.ul
             className="flex justify-end mb-6"
-            variants={container}
+            variants={containerCircle}
             initial="hidden"
             whileInView="visible"
           >          
@@ -264,7 +273,7 @@ const TeamPage: NextPage = () => {
 
           <motion.div 
             className="absolute left-5 mt-14"  
-            variants={container}
+            variants={containerCircle}
             initial="hidden"
             whileInView="visible"
           >   
@@ -279,7 +288,7 @@ const TeamPage: NextPage = () => {
           
           <motion.ul
             className="flex justify-center ml-24 mb-6"
-            variants={container}
+            variants={containerCircle}
             initial="hidden"
             whileInView="visible"
           >          
@@ -302,7 +311,7 @@ const TeamPage: NextPage = () => {
 
           <motion.ul
             className="flex justify-end mb-6"
-            variants={container}
+            variants={containerCircle}
             initial="hidden"
             whileInView="visible"
           >          
@@ -325,7 +334,7 @@ const TeamPage: NextPage = () => {
 
           <motion.ul
             className="flex justify-end mr-48 mb-6"
-            variants={container}
+            variants={containerCircle}
             initial="hidden"
             whileInView="visible"
           >          
