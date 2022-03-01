@@ -1,9 +1,14 @@
-import type { NextPage } from 'next'
+import type { NextPage, GetServerSideProps} from 'next'
+import * as cookie from 'cookie';
+import jwtDecode from 'jwt-decode';
 import Image from 'next/image'
 import clsx from 'clsx';
 import Header from 'components/templates/Header';
 import { useState } from 'react';
 const { motion } = require("framer-motion");
+
+type GeneratedToken = { userId: string; source: string; iat: number; exp: number };
+const CLIENT_URL = process.env.APP_URL;
 
 const team = [
   {
@@ -344,6 +349,36 @@ const TeamPage: NextPage = () => {
       }
     </div>
   )
+}
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const props = {
+    seo: {
+      mainseo: { title: `${process.env.APP_NAME} | Dashboard` },
+    },
+  };
+
+  const unvalidated = {
+    redirect: {
+      destination: '/',
+      permanent: false,
+    },
+  };
+
+  const cookies = cookie.parse(req.headers?.cookie || '');
+
+  if (!(cookies.authToken && cookies.token)) return unvalidated;
+
+  const token = jwtDecode<GeneratedToken>(cookies.authToken);
+  try {
+    if (Date.now() >= token.exp * 1000) return unvalidated;
+    if (CLIENT_URL !== token.source) return unvalidated;
+    return { props };
+  }
+  catch (error) {
+    return unvalidated;
+  }
 }
 
 export default TeamPage

@@ -1,13 +1,17 @@
-import type { NextPage } from 'next'
+import type { NextPage, GetServerSideProps } from 'next'
+import * as cookie from 'cookie';
+import jwtDecode from 'jwt-decode';
 import Image from 'next/image'
 import Button from 'components/ui/Button'
 import Input from 'components/ui/Input'
 import { useState } from 'react'
 import router from 'next/router'
+import axios from 'axios';
+
+type GeneratedToken = { userId: string; source: string; iat: number; exp: number };
 
 const { motion } = require("framer-motion");
-
-const hiddenPassword = "cWpG9T/{HWK]^@J~"
+const CLIENT_URL = process.env.APP_URL;
 
 const SignIn: NextPage = () => {
   const [password, setPassword] = useState('');
@@ -39,14 +43,14 @@ const SignIn: NextPage = () => {
     setIsLoading(true);
 
     try {
-      if (password !== hiddenPassword) {
-        throw new Error('Password does not match on the system');
+      const { data } = await axios.post('/api/sign-in', { password });
+      if (data?.message === 'success') {
+        router.push('/team-page');
       }
-      router.replace('/team-page');
-
-    } catch (error) {
+    } catch (error: any) {
+      const response = error?.response?.data?.message
       setIsLoading(false);
-      setError(`${error}`)
+      setError(`${response}`)
     }
   };
 
@@ -92,6 +96,36 @@ const SignIn: NextPage = () => {
       </motion.div>
     </motion.div>
   )
+}
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const props = {
+    seo: {
+      mainseo: { title: `${process.env.APP_NAME} | Sign In` },
+    },
+  };
+
+  const cookies = cookie.parse(req.headers?.cookie || '');
+
+  if (cookies.authToken && cookies.token) {
+    const token = jwtDecode<GeneratedToken>(cookies.authToken);
+
+    try {
+      if (Date.now() >= token.exp * 1000) return { props };
+      if (CLIENT_URL !== token.source) return { props };
+      return {
+        redirect: {
+          destination: '/team-page',
+          permanent: false,
+        },
+      };
+    } catch (error) {
+      return { props };
+    }
+  }
+
+  return { props };
 }
 
 export default SignIn
