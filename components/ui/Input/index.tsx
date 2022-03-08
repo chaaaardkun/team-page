@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
 import cx from './Input.module.scss';
 import clsx from 'clsx';
@@ -42,6 +43,7 @@ const Input = ({
   };
 
   const [inputValue, setInputValue] = React.useState(defaultValue);
+  const [visibility, setVisibility] = React.useState(true);
   React.useEffect(() => {
     setInputValue(defaultValue);
   }, [defaultValue]);
@@ -57,20 +59,28 @@ const Input = ({
     switch (type) {
       case 'password':
         return (
-          <input
-            type={type}
-            {...inputProps}
-            className={clsx(
-              cx['input'],
-              cx['peer'],
-              cx[`input__${variant}`],
-              { [cx[`input__${variant}--error`]]: errorMessage },
-              className
-            )}
-            placeholder={placeholder}
-            value={inputValue}
-            onInput={handleInput}
-          />
+          <>
+            <input
+              type={visibility ? type : 'text'}
+              {...inputProps}
+              className={clsx(
+                cx['input'],
+                cx['peer'],
+                cx[`input__${variant}`],
+                { [cx[`input__${variant}--error`]]: errorMessage },
+                className
+              )}
+              placeholder={placeholder}
+              value={inputValue}
+              onInput={handleInput}
+            />
+
+            <div className={`absolute ${!visibility ? 'top-[50%]' : 'top-[53%]'} right-[11px] ${inputValue ? 'visible' : 'hidden'}`}>
+              <button onClick={() => setVisibility(!visibility)} className="cursor-pointer">
+                <img src={`/icons/${!visibility ? 'icon-visible.svg' : 'icon-hide.svg'}`} alt="icon-visibility" />
+              </button>
+            </div>
+          </>
         );
 
       default:

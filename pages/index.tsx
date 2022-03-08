@@ -78,7 +78,7 @@ const SignIn: NextPage = () => {
       </motion.div>
       <motion.div variants={item}>
         <Input
-          placeholder="Current Password"
+          placeholder="Password"
           type="password"
           defaultValue={password}
           className="w-full mt-6"
