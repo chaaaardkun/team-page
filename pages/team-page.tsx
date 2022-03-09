@@ -245,7 +245,7 @@ const TeamPage: NextPage = () => {
         ))}
         </motion.ul>
 
-      <p className="mt-32 mb-16 text-center">&copy; 2021 <button type="button" onClick={() => setDisplayOldMembers(!displayOldMembers)}>All</button> rights reserved.</p>
+      <p className="mt-32 mb-16 text-center">&copy; 2022 <button type="button" onClick={() => setDisplayOldMembers(!displayOldMembers)}>All</button> rights reserved.</p>
       { displayOldMembers &&
         <div className="pb-24 mx-16 relative">
           <motion.ul
